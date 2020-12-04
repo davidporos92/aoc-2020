@@ -8,7 +8,7 @@ import (
 
 func main() {
 	targetSum := 2020
-	lines := utils.MustReadIntSliceFromFile("./input-1.dat", '\n', "\n\r")
+	lines := utils.New("./input-1.dat").MustReadIntSliceFromFile()
 
 	fmt.Printf("Solution 1: %d\n", puzzle1(lines, targetSum))
 	fmt.Printf("Solution 2: %d\n", puzzle2(lines, targetSum))

@@ -12,7 +12,7 @@ func main() {
 	var solutionOneValidCount int
 	var solutionTwoValidCount int
 
-	utils.MustReadFile("./input-1.dat", '\n', "\n\r", func(line string) {
+	utils.New("./input-1.dat").MustReadFile(func(line string) {
 		parts := regexp.MustCompile(`(\d+)-(\d+)\s([a-zA-Z]):\s([a-zA-Z]+)`).FindStringSubmatch(line)
 
 		// First number is the min occurrence for the first solution

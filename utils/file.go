@@ -9,8 +9,52 @@ import (
 	"strings"
 )
 
-func MustReadStringMapFromFile(path string, sep byte, trim string) (myMap [][]string) {
-	MustReadFile(path, sep, trim, func(line string) {
+type Reader interface {
+	SetValueSeparator(byte) Reader
+	SetTrimCutSet(string) Reader
+	SetIgnoreBlankLines(bool) Reader
+
+	MustReadStringMapFromFile() [][]string
+	MustReadIntSliceFromFile() []int
+	MustReadFile(func(string))
+}
+
+type reader struct {
+	path             string
+	valueSeparator   byte
+	trimCutSet       string
+	ignoreBlankLines bool
+}
+
+func New(path string) Reader {
+	return &reader{
+		path:             path,
+		valueSeparator:   '\n',
+		trimCutSet:       "\n\r",
+		ignoreBlankLines: true,
+	}
+}
+
+func (r *reader) SetValueSeparator(valueSeparator byte) Reader {
+	r.valueSeparator = valueSeparator
+
+	return r
+}
+
+func (r *reader) SetTrimCutSet(trimCutSet string) Reader {
+	r.trimCutSet = trimCutSet
+
+	return r
+}
+
+func (r *reader) SetIgnoreBlankLines(ignore bool) Reader {
+	r.ignoreBlankLines = ignore
+
+	return r
+}
+
+func (r *reader) MustReadStringMapFromFile() (myMap [][]string) {
+	r.MustReadFile(func(line string) {
 		lineSlice := make([]string, len(line))
 		for i, char := range []rune(line) {
 			lineSlice[i] = string(char)
@@ -21,10 +65,10 @@ func MustReadStringMapFromFile(path string, sep byte, trim string) (myMap [][]st
 	return myMap
 }
 
-func MustReadIntSliceFromFile(path string, sep byte, trim string) []int {
+func (r *reader) MustReadIntSliceFromFile() []int {
 	lines := make([]int, 0)
 
-	MustReadFile(path, sep, trim, func(line string) {
+	r.MustReadFile(func(line string) {
 		entry, err := strconv.Atoi(line)
 		if err != nil {
 			panic(fmt.Sprintf("String to Int conversion error: %v", err))
@@ -36,27 +80,28 @@ func MustReadIntSliceFromFile(path string, sep byte, trim string) []int {
 	return lines
 }
 
-func MustReadFile(path string, sep byte, trim string, cb func(line string)) {
-	f, err := os.Open(path)
+func (r *reader) MustReadFile(cb func(line string)) {
+	f, err := os.Open(r.path)
 	if err != nil {
 		panic(fmt.Sprintf("Cannot open file: %v", err))
 	}
 
 	reader := bufio.NewReader(f)
 	for {
-		line, err := reader.ReadString(sep)
+		line, err := reader.ReadString(r.valueSeparator)
 		if err != nil && err != io.EOF {
 			panic(fmt.Sprintf("Cannot read line: %v", err))
 		}
-
-		line = strings.Trim(line, trim)
-
-		if line != "" {
-			cb(line)
-		}
-
 		if err == io.EOF {
 			break
 		}
+
+		line = strings.Trim(line, r.trimCutSet)
+
+		if r.ignoreBlankLines && line == "" {
+			continue
+		}
+
+		cb(line)
 	}
 }

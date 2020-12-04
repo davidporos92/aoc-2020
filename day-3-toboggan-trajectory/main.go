@@ -16,29 +16,29 @@ type Slope struct {
 var slopes = []Slope{
 	{
 		moveRight: 1,
-		moveDown: 1,
+		moveDown:  1,
 	},
 	{
 		moveRight: 3,
-		moveDown: 1,
+		moveDown:  1,
 	},
 	{
 		moveRight: 5,
-		moveDown: 1,
+		moveDown:  1,
 	},
 	{
 		moveRight: 7,
-		moveDown: 1,
+		moveDown:  1,
 	},
 	{
 		moveRight: 1,
-		moveDown: 2,
+		moveDown:  2,
 	},
 }
 
 func main() {
 	treeMultiplication := 1
-	myMap := utils.MustReadStringMapFromFile("./input-1.dat", '\n', "\n\r")
+	myMap := utils.New("./input-1.dat").MustReadStringMapFromFile()
 
 	for _, slope := range slopes {
 		currentPositionX := 0
