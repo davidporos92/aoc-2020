@@ -9,28 +9,35 @@ import (
 	"strings"
 )
 
+type batchSeparator uint
+
+const (
+	BatchSeparatorBlankLine batchSeparator = iota
+)
+
 type Reader interface {
 	SetValueSeparator(byte) Reader
 	SetTrimCutSet(string) Reader
 	SetIgnoreBlankLines(bool) Reader
 
+	MustReadStringBatchesFromFile(batchSeparator batchSeparator) []string
 	MustReadStringMapFromFile() [][]string
 	MustReadIntSliceFromFile() []int
 	MustReadFile(func(string))
 }
 
 type reader struct {
-	path             string
-	valueSeparator   byte
-	trimCutSet       string
+	path string
+	valueSeparator byte
+	trimCutSet string
 	ignoreBlankLines bool
 }
 
 func New(path string) Reader {
 	return &reader{
-		path:             path,
-		valueSeparator:   '\n',
-		trimCutSet:       "\n\r",
+		path:           path,
+		valueSeparator: '\n',
+		trimCutSet:     "\n\r",
 		ignoreBlankLines: true,
 	}
 }
@@ -51,6 +58,31 @@ func (r *reader) SetIgnoreBlankLines(ignore bool) Reader {
 	r.ignoreBlankLines = ignore
 
 	return r
+}
+
+func (r *reader) MustReadStringBatchesFromFile(batchSeparator batchSeparator) []string {
+	if batchSeparator == BatchSeparatorBlankLine {
+		r.SetIgnoreBlankLines(false)
+	}
+
+	batch := make([]string, 0)
+	var currentBatch []string
+
+	r.MustReadFile(func(line string) {
+		switch batchSeparator {
+		case BatchSeparatorBlankLine:
+			if line == "" {
+
+				batch = append(batch, strings.Join(currentBatch, " "))
+				currentBatch = make([]string, 0)
+				return
+			}
+		}
+
+		currentBatch = append(currentBatch, line)
+	})
+
+	return append(batch, strings.Join(currentBatch, " "))
 }
 
 func (r *reader) MustReadStringMapFromFile() (myMap [][]string) {
