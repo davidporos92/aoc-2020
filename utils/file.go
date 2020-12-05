@@ -27,17 +27,17 @@ type Reader interface {
 }
 
 type reader struct {
-	path string
-	valueSeparator byte
-	trimCutSet string
+	path             string
+	valueSeparator   byte
+	trimCutSet       string
 	ignoreBlankLines bool
 }
 
-func New(path string) Reader {
+func NewReader(path string) Reader {
 	return &reader{
-		path:           path,
-		valueSeparator: '\n',
-		trimCutSet:     "\n\r",
+		path:             path,
+		valueSeparator:   '\n',
+		trimCutSet:       "\n\r",
 		ignoreBlankLines: true,
 	}
 }

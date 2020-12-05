@@ -38,7 +38,7 @@ var slopes = []Slope{
 
 func main() {
 	treeMultiplication := 1
-	myMap := utils.New("./input-1.dat").MustReadStringMapFromFile()
+	myMap := utils.NewReader("./input-1.dat").MustReadStringMapFromFile()
 
 	for _, slope := range slopes {
 		currentPositionX := 0

@@ -152,7 +152,7 @@ func main() {
 	var validCountSolution1 int
 	var validCountSolution2 int
 	passports := make([]*Passport, 0)
-	batches := utils.New("./input-1.dat").MustReadStringBatchesFromFile(utils.BatchSeparatorBlankLine)
+	batches := utils.NewReader("./input-1.dat").MustReadStringBatchesFromFile(utils.BatchSeparatorBlankLine)
 	for _, batch := range batches {
 		passport := NewPassport(batch)
 		passports = append(passports, passport)
