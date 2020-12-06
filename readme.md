@@ -5,3 +5,4 @@
 * ❄️ [Day 3: Toboggan Trajectory](day-3-toboggan-trajectory/main.go)
 * ❄️ [Day 4: Passport Processing](day-4-passport-processing/main.go)
 * ❄️ [Day 5: Binary Boarding](day-5-binary-boarding/main.go)
+* ❄️ [Day 6: ](day-6-custom-customs/main.go)
