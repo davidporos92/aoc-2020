@@ -7,3 +7,4 @@
 * ❄️ [Day 5: Binary Boarding](day-5-binary-boarding/main.go)
 * ❄️ [Day 6: Custom Customs](day-6-custom-customs/main.go)
 * ❄️ [Day 7: Handy Haversacks](day-7-handy-haversacks/main.go)
+* ❄️ [Day 8: Handheld Halting](day-8-handheld-halting/main.go)
