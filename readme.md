@@ -8,3 +8,4 @@
 * ❄️ [Day 6: Custom Customs](day-06-custom-customs/main.go)
 * ❄️ [Day 7: Handy Haversacks](day-07-handy-haversacks/main.go)
 * ❄️ [Day 8: Handheld Halting](day-08-handheld-halting/main.go)
+* ❄️ [Day 9: Encoding Error](day-08-handheld-halting/main.go)
