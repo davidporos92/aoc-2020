@@ -9,3 +9,4 @@
 * ❄️ [Day 7: Handy Haversacks](day-07-handy-haversacks/main.go)
 * ❄️ [Day 8: Handheld Halting](day-08-handheld-halting/main.go)
 * ❄️ [Day 9: Encoding Error](day-09-encoding-error/main.go)
+* ❄️ [Day 10: Adapter Array](day-10-adapter-array/main.go)
