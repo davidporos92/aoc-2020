@@ -22,12 +22,6 @@ func part1(input []int) int {
 	diff1 := 0
 	diff3 := 0
 
-	if input[0] == 1 {
-		diff1++
-	} else if input[0] == 3 {
-		diff3++
-	}
-
 	for i := 1; i < len(input); i++ {
 		switch input[i] - input[i-1] {
 		case 1:
