@@ -11,3 +11,4 @@
 * ❄️ [Day 9: Encoding Error](day-09-encoding-error/main.go)
 * ❄️ [Day 10: Adapter Array](day-10-adapter-array/main.go)
 * ❄️ [Day 11: Seating System](day-11-seating-system/main.go)
+* ❄️ [Day 12: Rain Risk](day-12-rain-risk/main.go)
